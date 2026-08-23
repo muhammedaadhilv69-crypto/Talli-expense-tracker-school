@@ -1,29 +1,16 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "../globals.css";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import {AppSidebar} from "@/components/shared/AppSidebar";
+import Navbar from "@/components/shared/Navbar";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-export const metadata: Metadata = {
-  title: "Talli | Expense tracker for Students",
-  description: "Expense Tracker for Students",
-};
-
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">{children}</body>
-    </html>
+    <SidebarProvider>
+      <AppSidebar />
+
+      <SidebarInset>
+        <Navbar />
+        {children}
+      </SidebarInset>
+    </SidebarProvider>
   );
 }
