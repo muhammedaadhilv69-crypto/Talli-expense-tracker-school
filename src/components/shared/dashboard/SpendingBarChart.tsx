@@ -34,7 +34,7 @@ type SpendingBarChartProps = {
 
 export default function SpendingBarChart({ data }: SpendingBarChartProps) {
   return (
-    <Card className="w-fit p-2 h-fit">
+    <Card className="w-fit p-2 min-h-fit h-full max-h-full">
       <CardHeader className="flex gap-2 justify-between">
         <div>
           <CardTitle>Spending Overview</CardTitle>
@@ -44,7 +44,7 @@ export default function SpendingBarChart({ data }: SpendingBarChartProps) {
       </CardHeader>
 
       <CardContent>
-        <ChartContainer config={chartConfig} className="min-h-40 h-fit w-96">
+        <ChartContainer config={chartConfig} className="min-h-fit h-fit w-96">
           <BarChart
             accessibilityLayer
             data={data}

@@ -1,34 +1,3 @@
-// import { createClient } from "@/lib/supabase/client";
-
-// export async function getDashboardSummary(userId: string) {
-//   const supabase = createClient();
-
-//   const { data: transactions, error } = await supabase
-//     .from("transactions")
-//     .select("type, amount")
-//     .eq("user_id", userId);
-
-//   if (error) {
-//     throw error;
-//   }
-
-//   const income = transactions
-//     .filter((transaction) => transaction.type === "income")
-//     .reduce((total, transaction) => total + Number(transaction.amount), 0);
-
-//   const expenses = transactions
-//     .filter((transaction) => transaction.type === "expense")
-//     .reduce((total, transaction) => total + Number(transaction.amount), 0);
-
-//   const balance = income - expenses;
-
-//   return {
-//     income,
-//     expenses,
-//     balance,
-//   };
-// }
-
 import { createClient } from "@/lib/supabase/server";
 
 export async function getDashboardSummary() {
@@ -148,7 +117,6 @@ export async function getRecentTransactions() {
   return data;
 }
 
-
 export async function getBudgetOverview() {
   const supabase = await createClient();
 
@@ -221,4 +189,47 @@ export async function getBudgetOverview() {
       endDate: budget.end_date,
     };
   });
+}
+
+const PAGE_SIZE = 10;
+
+export async function getTransactions(page = 1) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    throw new Error("Unauthorized");
+  }
+
+  const from = (page - 1) * PAGE_SIZE;
+  const to = from + PAGE_SIZE - 1;
+
+  const { data, error, count } = await supabase
+    .from("transactions")
+    .select(
+      `
+    id,
+    amount,
+    type,
+    transaction_date,
+    categories (
+      name,
+      icon
+    )
+  `,
+      { count: "exact" },
+    )
+    .eq("user_id", user.id)
+    .order("transaction_date", { ascending: false })
+    .range(from, to);
+
+  if (error) {
+    throw error;
+  }
+  return {
+    transactions: data ?? [],
+    totalPages: Math.ceil((count ?? 0) / PAGE_SIZE),
+  };
 }

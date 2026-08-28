@@ -10,6 +10,8 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import RecentTransactionsSkeleton from "@/components/shared/skeletons/RecentTransactionsSkeleton";
 import BudgetOverview from "@/components/shared/dashboard/BudgetOverview";
+import BudgetOverviewSkeleton from "@/components/shared/skeletons/BudgetOverviewSkeleton"
+
 export default async function Page() {
   const profile = await getProfile();
   return (
@@ -44,7 +46,7 @@ export default async function Page() {
             </Suspense>
           </div>
           <div className="flex-2 flex">
-            <Suspense>
+            <Suspense fallback={<BudgetOverviewSkeleton />}>
               <BudgetOverview />
             </Suspense>
           </div>
