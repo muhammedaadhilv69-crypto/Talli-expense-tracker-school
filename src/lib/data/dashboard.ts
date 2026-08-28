@@ -191,7 +191,7 @@ export async function getBudgetOverview() {
   });
 }
 
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 15;
 
 export async function getTransactions(page = 1) {
   const supabase = await createClient();
