@@ -1,0 +1,394 @@
+﻿{
+  "demo": {
+    "email": "demo@talli.local",
+    "password": "12345678",
+    "full_name": "Demo Student",
+    "currency": "INR"
+  },
+  "transactions": [
+    {
+      "category_id": "salary",
+      "type": "income",
+      "amount": 5000,
+      "description": "Monthly allowance",
+      "transaction_date": "2026-08-01"
+    },
+    {
+      "category_id": "freelance",
+      "type": "income",
+      "amount": 2500,
+      "description": "Website project",
+      "transaction_date": "2026-08-05"
+    },
+    {
+      "category_id": "gift",
+      "type": "income",
+      "amount": 1000,
+      "description": "Birthday gift",
+      "transaction_date": "2026-08-08"
+    },
+    {
+      "category_id": "food",
+      "type": "expense",
+      "amount": 250,
+      "description": "Lunch",
+      "transaction_date": "2026-08-02"
+    },
+    {
+      "category_id": "transport",
+      "type": "expense",
+      "amount": 120,
+      "description": "Taxi",
+      "transaction_date": "2026-08-03"
+    },
+    {
+      "category_id": "education",
+      "type": "expense",
+      "amount": 800,
+      "description": "Online course",
+      "transaction_date": "2026-08-04"
+    },
+    {
+      "category_id": "food",
+      "type": "expense",
+      "amount": 340,
+      "description": "Dinner",
+      "transaction_date": "2026-08-06"
+    },
+    {
+      "category_id": "shopping",
+      "type": "expense",
+      "amount": 650,
+      "description": "Clothes",
+      "transaction_date": "2026-08-07"
+    },
+    {
+      "category_id": "entertainment",
+      "type": "expense",
+      "amount": 300,
+      "description": "Movie",
+      "transaction_date": "2026-08-09"
+    },
+    {
+      "category_id": "transport",
+      "type": "expense",
+      "amount": 180,
+      "description": "Bus and taxi",
+      "transaction_date": "2026-08-10"
+    },
+    {
+      "category_id": "food",
+      "type": "expense",
+      "amount": 420,
+      "description": "Groceries",
+      "transaction_date": "2026-08-11"
+    },
+    {
+      "category_id": "education",
+      "type": "expense",
+      "amount": 100,
+      "description": "Study materials",
+      "transaction_date": "2026-08-12"
+    },
+    {
+      "category_id": "health",
+      "type": "expense",
+      "amount": 250,
+      "description": "Pharmacy",
+      "transaction_date": "2026-08-13"
+    },
+    {
+      "category_id": "food",
+      "type": "expense",
+      "amount": 290,
+      "description": "Lunch",
+      "transaction_date": "2026-08-15"
+    },
+    {
+      "category_id": "bills",
+      "type": "expense",
+      "amount": 500,
+      "description": "Phone bill",
+      "transaction_date": "2026-08-16"
+    },
+    {
+      "category_id": "entertainment",
+      "type": "expense",
+      "amount": 200,
+      "description": "Games",
+      "transaction_date": "2026-08-18"
+    },
+    {
+      "category_id": "food",
+      "type": "expense",
+      "amount": 360,
+      "description": "Dinner",
+      "transaction_date": "2026-08-20"
+    },
+    {
+      "category_id": "shopping",
+      "type": "expense",
+      "amount": 450,
+      "description": "Accessories",
+      "transaction_date": "2026-08-21"
+    },
+
+    {
+      "category_id": "salary",
+      "type": "income",
+      "amount": 5000,
+      "description": "Monthly allowance",
+      "transaction_date": "2026-07-01"
+    },
+    {
+      "category_id": "freelance",
+      "type": "income",
+      "amount": 1800,
+      "description": "Tutoring session",
+      "transaction_date": "2026-07-09"
+    },
+    {
+      "category_id": "otherIncome",
+      "type": "income",
+      "amount": 300,
+      "description": "Cashback",
+      "transaction_date": "2026-07-22"
+    },
+    {
+      "category_id": "food",
+      "type": "expense",
+      "amount": 1800,
+      "description": "Monthly groceries",
+      "transaction_date": "2026-07-05"
+    },
+    {
+      "category_id": "transport",
+      "type": "expense",
+      "amount": 600,
+      "description": "Bus pass",
+      "transaction_date": "2026-07-06"
+    },
+    {
+      "category_id": "education",
+      "type": "expense",
+      "amount": 950,
+      "description": "Textbook bundle",
+      "transaction_date": "2026-07-10"
+    },
+    {
+      "category_id": "shopping",
+      "type": "expense",
+      "amount": 1200,
+      "description": "Back-to-school",
+      "transaction_date": "2026-07-15"
+    },
+    {
+      "category_id": "bills",
+      "type": "expense",
+      "amount": 500,
+      "description": "Phone bill",
+      "transaction_date": "2026-07-16"
+    },
+    {
+      "category_id": "entertainment",
+      "type": "expense",
+      "amount": 700,
+      "description": "Concert ticket",
+      "transaction_date": "2026-07-19"
+    },
+    {
+      "category_id": "health",
+      "type": "expense",
+      "amount": 400,
+      "description": "Doctor visit",
+      "transaction_date": "2026-07-24"
+    },
+    {
+      "category_id": "otherExpense",
+      "type": "expense",
+      "amount": 150,
+      "description": "Misc",
+      "transaction_date": "2026-07-28"
+    },
+
+    {
+      "category_id": "salary",
+      "type": "income",
+      "amount": 5000,
+      "description": "Monthly allowance",
+      "transaction_date": "2026-06-01"
+    },
+    {
+      "category_id": "gift",
+      "type": "income",
+      "amount": 500,
+      "description": "Festival gift",
+      "transaction_date": "2026-06-12"
+    },
+    {
+      "category_id": "food",
+      "type": "expense",
+      "amount": 2100,
+      "description": "Monthly groceries",
+      "transaction_date": "2026-06-04"
+    },
+    {
+      "category_id": "transport",
+      "type": "expense",
+      "amount": 550,
+      "description": "Commute",
+      "transaction_date": "2026-06-08"
+    },
+    {
+      "category_id": "education",
+      "type": "expense",
+      "amount": 600,
+      "description": "Lab materials",
+      "transaction_date": "2026-06-14"
+    },
+    {
+      "category_id": "bills",
+      "type": "expense",
+      "amount": 500,
+      "description": "Phone bill",
+      "transaction_date": "2026-06-16"
+    },
+    {
+      "category_id": "entertainment",
+      "type": "expense",
+      "amount": 450,
+      "description": "Streaming subscription",
+      "transaction_date": "2026-06-20"
+    },
+    {
+      "category_id": "shopping",
+      "type": "expense",
+      "amount": 800,
+      "description": "Sneakers",
+      "transaction_date": "2026-06-25"
+    },
+    {
+      "category_id": "health",
+      "type": "expense",
+      "amount": 300,
+      "description": "Vitamins",
+      "transaction_date": "2026-06-28"
+    }
+  ],
+  "budgets": [
+    {
+      "category_id": "food",
+      "amount": 2000,
+      "period": "monthly",
+      "start_date": "2026-08-01",
+      "end_date": "2026-08-31"
+    },
+    {
+      "category_id": "transport",
+      "amount": 1000,
+      "period": "monthly",
+      "start_date": "2026-08-01",
+      "end_date": "2026-08-31"
+    },
+    {
+      "category_id": "education",
+      "amount": 1500,
+      "period": "monthly",
+      "start_date": "2026-08-01",
+      "end_date": "2026-08-31"
+    },
+    {
+      "category_id": "shopping",
+      "amount": 1000,
+      "period": "monthly",
+      "start_date": "2026-08-01",
+      "end_date": "2026-08-31"
+    },
+    {
+      "category_id": "entertainment",
+      "amount": 750,
+      "period": "monthly",
+      "start_date": "2026-08-01",
+      "end_date": "2026-08-31"
+    },
+    {
+      "category_id": "bills",
+      "amount": 600,
+      "period": "monthly",
+      "start_date": "2026-08-01",
+      "end_date": "2026-08-31"
+    },
+    {
+      "category_id": "health",
+      "amount": 500,
+      "period": "monthly",
+      "start_date": "2026-08-01",
+      "end_date": "2026-08-31"
+    },
+    {
+      "category_id": "food",
+      "amount": 500,
+      "period": "weekly",
+      "start_date": "2026-08-17",
+      "end_date": "2026-08-23"
+    },
+    {
+      "category_id": "food",
+      "amount": 2000,
+      "period": "monthly",
+      "start_date": "2026-07-01",
+      "end_date": "2026-07-31"
+    },
+    {
+      "category_id": "transport",
+      "amount": 800,
+      "period": "monthly",
+      "start_date": "2026-07-01",
+      "end_date": "2026-07-31"
+    },
+    {
+      "category_id": "entertainment",
+      "amount": 800,
+      "period": "monthly",
+      "start_date": "2026-07-01",
+      "end_date": "2026-07-31"
+    }
+  ],
+  "savings_goals": [
+    {
+      "name": "New Laptop",
+      "target_amount": 50000,
+      "current_amount": 12500,
+      "target_date": "2027-03-01",
+      "description": "Saving for a new development laptop."
+    },
+    {
+      "name": "Emergency Fund",
+      "target_amount": 20000,
+      "current_amount": 7500,
+      "target_date": "2027-01-01",
+      "description": "Build a small emergency fund."
+    },
+    {
+      "name": "Trip",
+      "target_amount": 15000,
+      "current_amount": 4000,
+      "target_date": "2027-06-01",
+      "description": "Savings for a future trip."
+    },
+    {
+      "name": "Concert Tickets",
+      "target_amount": 8000,
+      "current_amount": 2400,
+      "target_date": "2026-12-15",
+      "description": "Saving for upcoming live shows."
+    },
+    {
+      "name": "Driving Lessons",
+      "target_amount": 12000,
+      "current_amount": 3000,
+      "target_date": "2027-02-10",
+      "description": "Saving up for a full driving course."
+    }
+  ]
+}

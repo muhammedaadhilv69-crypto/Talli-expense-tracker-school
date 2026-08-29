@@ -1,8 +1,9 @@
-import dotenv from "dotenv";
+﻿import dotenv from "dotenv";
 
 dotenv.config({ path: ".env.local" });
 
 import { createClient } from "@supabase/supabase-js";
+import seedData from "./seed.json";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const serviceRoleKey = process.env.SUPABASE_SECRET_KEY;
@@ -18,10 +19,10 @@ const supabase = createClient(supabaseUrl, serviceRoleKey, {
   },
 });
 
-const DEMO_EMAIL = "demo@talli.local";
-const DEMO_PASSWORD = "12345678";
-const DEMO_NAME = "Demo Student";
-const DEMO_CURRENCY = "INR";
+const DEMO_EMAIL = seedData.demo.email;
+const DEMO_PASSWORD = seedData.demo.password;
+const DEMO_NAME = seedData.demo.full_name;
+const DEMO_CURRENCY = seedData.demo.currency;
 
 // Fixed category IDs.
 // Because categories are global, deterministic IDs make the seed
@@ -40,7 +41,18 @@ const CATEGORY_IDS = {
   health: "00000000-0000-0000-0000-000000000106",
   bills: "00000000-0000-0000-0000-000000000107",
   otherExpense: "00000000-0000-0000-0000-000000000108",
-};
+} as const;
+
+type CategoryKey = keyof typeof CATEGORY_IDS;
+
+function resolveCategoryId(key: string): string {
+  if (!(key in CATEGORY_IDS)) {
+    throw new Error(
+      `Unknown category key in seed.json: "${key}". Add it to CATEGORY_IDS in seed.ts.`,
+    );
+  }
+  return CATEGORY_IDS[key as CategoryKey];
+}
 
 async function findDemoUser() {
   const { data, error } = await supabase.auth.admin.listUsers({
@@ -101,51 +113,6 @@ async function resetDemoUser() {
 
   console.log("✅ Existing demo user removed.");
 }
-
-// async function resetDemoUser() {
-//   const existingUser = await findDemoUser();
-
-//   if (!existingUser) {
-//     console.log("ℹ️ No existing demo user found.");
-//     return;
-//   }
-
-//   const userId = existingUser.id;
-
-//   console.log(`♻️ Resetting demo user ${existingUser.email}...`);
-
-//   // Delete user-owned rows first.
-//   // This keeps the seed safe even if some FK constraints aren't CASCADE.
-//   const tables = [
-//     "savings_goals",
-//     "budgets",
-//     "transactions",
-//     "profiles",
-//   ] as const;
-
-//   for (const table of tables) {
-//     const { error } = await supabase
-//       .from(table)
-//       .delete()
-//       .eq("id", table === "profiles" ? userId : userId);
-
-//     if (error) {
-//       throw new Error(
-//         `Failed deleting from ${table}: ${error.message}`,
-//       );
-//     }
-//   }
-
-//   // Delete the Auth user itself.
-//   const { error: deleteAuthError } =
-//     await supabase.auth.admin.deleteUser(userId);
-
-//   if (deleteAuthError) {
-//     throw deleteAuthError;
-//   }
-
-//   console.log("✅ Existing demo user removed.");
-// }
 
 async function createDemoUser() {
   const { data, error } = await supabase.auth.admin.createUser({
@@ -272,155 +239,14 @@ async function seedProfile(userId: string) {
 }
 
 async function seedTransactions(userId: string) {
-  const transactions = [
-    // Income
-    {
-      user_id: userId,
-      category_id: CATEGORY_IDS.salary,
-      type: "income",
-      amount: 5000,
-      description: "Monthly allowance",
-      transaction_date: "2026-08-01",
-    },
-    {
-      user_id: userId,
-      category_id: CATEGORY_IDS.freelance,
-      type: "income",
-      amount: 2500,
-      description: "Website project",
-      transaction_date: "2026-08-05",
-    },
-    {
-      user_id: userId,
-      category_id: CATEGORY_IDS.gift,
-      type: "income",
-      amount: 1000,
-      description: "Birthday gift",
-      transaction_date: "2026-08-08",
-    },
-
-    // Expenses
-    {
-      user_id: userId,
-      category_id: CATEGORY_IDS.food,
-      type: "expense",
-      amount: 250,
-      description: "Lunch",
-      transaction_date: "2026-08-02",
-    },
-    {
-      user_id: userId,
-      category_id: CATEGORY_IDS.transport,
-      type: "expense",
-      amount: 120,
-      description: "Taxi",
-      transaction_date: "2026-08-03",
-    },
-    {
-      user_id: userId,
-      category_id: CATEGORY_IDS.education,
-      type: "expense",
-      amount: 800,
-      description: "Online course",
-      transaction_date: "2026-08-04",
-    },
-    {
-      user_id: userId,
-      category_id: CATEGORY_IDS.food,
-      type: "expense",
-      amount: 340,
-      description: "Dinner",
-      transaction_date: "2026-08-06",
-    },
-    {
-      user_id: userId,
-      category_id: CATEGORY_IDS.shopping,
-      type: "expense",
-      amount: 650,
-      description: "Clothes",
-      transaction_date: "2026-08-07",
-    },
-    {
-      user_id: userId,
-      category_id: CATEGORY_IDS.entertainment,
-      type: "expense",
-      amount: 300,
-      description: "Movie",
-      transaction_date: "2026-08-09",
-    },
-    {
-      user_id: userId,
-      category_id: CATEGORY_IDS.transport,
-      type: "expense",
-      amount: 180,
-      description: "Bus and taxi",
-      transaction_date: "2026-08-10",
-    },
-    {
-      user_id: userId,
-      category_id: CATEGORY_IDS.food,
-      type: "expense",
-      amount: 420,
-      description: "Groceries",
-      transaction_date: "2026-08-11",
-    },
-    {
-      user_id: userId,
-      category_id: CATEGORY_IDS.education,
-      type: "expense",
-      amount: 100,
-      description: "Study materials",
-      transaction_date: "2026-08-12",
-    },
-    {
-      user_id: userId,
-      category_id: CATEGORY_IDS.health,
-      type: "expense",
-      amount: 250,
-      description: "Pharmacy",
-      transaction_date: "2026-08-13",
-    },
-    {
-      user_id: userId,
-      category_id: CATEGORY_IDS.food,
-      type: "expense",
-      amount: 290,
-      description: "Lunch",
-      transaction_date: "2026-08-15",
-    },
-    {
-      user_id: userId,
-      category_id: CATEGORY_IDS.bills,
-      type: "expense",
-      amount: 500,
-      description: "Phone bill",
-      transaction_date: "2026-08-16",
-    },
-    {
-      user_id: userId,
-      category_id: CATEGORY_IDS.entertainment,
-      type: "expense",
-      amount: 200,
-      description: "Games",
-      transaction_date: "2026-08-18",
-    },
-    {
-      user_id: userId,
-      category_id: CATEGORY_IDS.food,
-      type: "expense",
-      amount: 360,
-      description: "Dinner",
-      transaction_date: "2026-08-20",
-    },
-    {
-      user_id: userId,
-      category_id: CATEGORY_IDS.shopping,
-      type: "expense",
-      amount: 450,
-      description: "Accessories",
-      transaction_date: "2026-08-21",
-    },
-  ];
+  const transactions = seedData.transactions.map((transaction) => ({
+    user_id: userId,
+    category_id: resolveCategoryId(transaction.category_id),
+    type: transaction.type,
+    amount: transaction.amount,
+    description: transaction.description,
+    transaction_date: transaction.transaction_date,
+  }));
 
   const { error } = await supabase.from("transactions").insert(transactions);
 
@@ -428,62 +254,18 @@ async function seedTransactions(userId: string) {
     throw error;
   }
 
-  console.log("✅ Transactions seeded.");
+  console.log(`✅ ${transactions.length} transactions seeded.`);
 }
 
 async function seedBudgets(userId: string) {
-  const budgets = [
-    {
-      user_id: userId,
-      category_id: CATEGORY_IDS.food,
-      amount: 2000,
-      period: "monthly",
-      start_date: "2026-08-01",
-      end_date: "2026-08-31",
-    },
-    {
-      user_id: userId,
-      category_id: CATEGORY_IDS.transport,
-      amount: 1000,
-      period: "monthly",
-      start_date: "2026-08-01",
-      end_date: "2026-08-31",
-    },
-    {
-      user_id: userId,
-      category_id: CATEGORY_IDS.education,
-      amount: 1500,
-      period: "monthly",
-      start_date: "2026-08-01",
-      end_date: "2026-08-31",
-    },
-    {
-      user_id: userId,
-      category_id: CATEGORY_IDS.shopping,
-      amount: 1000,
-      period: "monthly",
-      start_date: "2026-08-01",
-      end_date: "2026-08-31",
-    },
-    {
-      user_id: userId,
-      category_id: CATEGORY_IDS.entertainment,
-      amount: 750,
-      period: "monthly",
-      start_date: "2026-08-01",
-      end_date: "2026-08-31",
-    },
-
-    // Weekly budget example
-    {
-      user_id: userId,
-      category_id: CATEGORY_IDS.food,
-      amount: 500,
-      period: "weekly",
-      start_date: "2026-08-17",
-      end_date: "2026-08-23",
-    },
-  ];
+  const budgets = seedData.budgets.map((budget) => ({
+    user_id: userId,
+    category_id: resolveCategoryId(budget.category_id),
+    amount: budget.amount,
+    period: budget.period,
+    start_date: budget.start_date,
+    end_date: budget.end_date,
+  }));
 
   const { error } = await supabase.from("budgets").insert(budgets);
 
@@ -491,36 +273,18 @@ async function seedBudgets(userId: string) {
     throw error;
   }
 
-  console.log("✅ Budgets seeded.");
+  console.log(`✅ ${budgets.length} budgets seeded.`);
 }
 
 async function seedSavingsGoals(userId: string) {
-  const savingsGoals = [
-    {
-      user_id: userId,
-      name: "New Laptop",
-      target_amount: 50000,
-      current_amount: 12500,
-      target_date: "2027-03-01",
-      description: "Saving for a new development laptop.",
-    },
-    {
-      user_id: userId,
-      name: "Emergency Fund",
-      target_amount: 20000,
-      current_amount: 7500,
-      target_date: "2027-01-01",
-      description: "Build a small emergency fund.",
-    },
-    {
-      user_id: userId,
-      name: "Trip",
-      target_amount: 15000,
-      current_amount: 4000,
-      target_date: "2027-06-01",
-      description: "Savings for a future trip.",
-    },
-  ];
+  const savingsGoals = seedData.savings_goals.map((goal) => ({
+    user_id: userId,
+    name: goal.name,
+    target_amount: goal.target_amount,
+    current_amount: goal.current_amount,
+    target_date: goal.target_date,
+    description: goal.description,
+  }));
 
   const { error } = await supabase.from("savings_goals").insert(savingsGoals);
 
@@ -528,7 +292,7 @@ async function seedSavingsGoals(userId: string) {
     throw error;
   }
 
-  console.log("✅ Savings goals seeded.");
+  console.log(`✅ ${savingsGoals.length} savings goals seeded.`);
 }
 
 async function seed() {
