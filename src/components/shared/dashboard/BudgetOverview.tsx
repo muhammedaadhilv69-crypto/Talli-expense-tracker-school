@@ -1,9 +1,10 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { getBudgetOverview } from "@/lib/data/dashboard"
 import BudgetItem from "../BudgetItem";
+import type { BudgetOverview } from "@/lib/data/budgets";
 
 export default async function BudgetOverview() {
-    const budgets = await getBudgetOverview();
+    const budgets: BudgetOverview[] = await getBudgetOverview();
     return (
         <Card className="w-full">
             <CardHeader>

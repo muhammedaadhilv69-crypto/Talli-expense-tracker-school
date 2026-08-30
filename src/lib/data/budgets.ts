@@ -3,7 +3,22 @@ import type { Budget } from "@/types/budgets";
 
 const PAGE_SIZE = 10;
 
-export async function getBudgetOverview() {
+export type BudgetOverview = {
+  id: string;
+  category: {
+    name: string;
+    icon: string;
+  } | null;
+  budget: number;
+  spent: number;
+  remaining: number;
+  percentage: number;
+  period: "weekly" | "monthly";
+  startDate: string;
+  endDate: string;
+};
+
+export async function getBudgetOverview(): Promise<BudgetOverview[]> {
   const supabase = await createClient();
 
   const {
@@ -65,12 +80,17 @@ export async function getBudgetOverview() {
 
     return {
       id: budget.id,
-      category: budget.categories,
+      category: budget.categories
+        ? {
+            name: budget.categories.name,
+            icon: budget.categories.icon ?? "other",
+          }
+        : null,
       budget: budgetAmount,
       spent,
       remaining: budgetAmount - spent,
       percentage,
-      period: budget.period,
+      period: budget.period === "weekly" ? "weekly" : "monthly",
       startDate: budget.start_date,
       endDate: budget.end_date,
     };
@@ -238,7 +258,11 @@ export async function getAllBudgetsForPage(
   const from = (page - 1) * PAGE_SIZE;
   const to = from + PAGE_SIZE - 1;
 
-  const { data: budgets, error: budgetsError, count } = await supabase
+  const {
+    data: budgets,
+    error: budgetsError,
+    count,
+  } = await supabase
     .from("budgets")
     .select(
       `
