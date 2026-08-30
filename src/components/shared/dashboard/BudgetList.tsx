@@ -1,17 +1,15 @@
 ﻿import Budget from "@/components/shared/dashboard/Budget";
 import Pagination from "@/components/shared/dashboard/Pagination";
 import { getAllBudgetsForPage } from "@/lib/data/budgets";
+import { Budget as Bud } from "@/types/budgets";
 
 type BudgetListProps = {
-  page: number;
-  basePath?: string;
+  budgets: Bud[];
 };
 
 export default async function BudgetList({
-  page,
-  basePath = "/dashboard/budgets",
+  budgets
 }: BudgetListProps) {
-  const { budgets, totalPages } = await getAllBudgetsForPage(page);
 
   return (
     <>
@@ -20,11 +18,6 @@ export default async function BudgetList({
           <Budget key={b.id} budget={b} />
         ))}
       </div>
-      <Pagination
-        currentPage={page}
-        totalPages={totalPages}
-        createHref={(p) => `${basePath}?page=${p}`}
-      />
     </>
   );
 }
