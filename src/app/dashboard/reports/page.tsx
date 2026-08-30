@@ -5,7 +5,7 @@ export default function Page() {
         Coming soon!
       </div>
       <p className="text-muted-foreground text-sm">
-        We are working hard to get this done for you!
+        Automated reports on your spendings, budgets, etc.
       </p>
     </div>
   );
