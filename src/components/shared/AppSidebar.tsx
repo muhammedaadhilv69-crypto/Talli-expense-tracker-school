@@ -26,7 +26,7 @@ import { mainNav, insightNav } from "@/utils/RouteDefinitions";
 export function AppSidebar() {
   const pathname = usePathname();
   const isActive = (href: string) =>
-    pathname === href || pathname.startsWith(`${href}/`);
+    pathname === href || pathname.startsWith(`dashboard/${href}`);
   return (
     <Sidebar>
       <SidebarHeader>
@@ -46,10 +46,11 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               {mainNav.map((item) => (
-                <SidebarMenuItem key={item.href}>
+                <SidebarMenuItem key={item.href} >
                   <SidebarMenuButton
                     isActive={isActive(item.href)}
                     render={<Link href={item.href} />}
+                    disabled={item.disabled}
                   >
                     <item.icon />
                     <span>{item.title}</span>

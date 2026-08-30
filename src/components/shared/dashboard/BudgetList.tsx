@@ -1,6 +1,4 @@
 ﻿import Budget from "@/components/shared/dashboard/Budget";
-import Pagination from "@/components/shared/dashboard/Pagination";
-import { getAllBudgetsForPage } from "@/lib/data/budgets";
 import { Budget as Bud } from "@/types/budgets";
 
 type BudgetListProps = {
