@@ -42,7 +42,7 @@ export const mainNav = [
 
 export const insightNav = [
   {
-    title: "Reports",
+    title: "Reports (Coming soon)",
     href: "/dashboard/reports",
     icon: BarChart3,
     disabled: false,
