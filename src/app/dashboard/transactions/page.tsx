@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { getTransactions } from "@/lib/data/dashboard";
 import {
   Table,
@@ -20,7 +19,8 @@ import {
   EmptyContent,
 } from "@/components/ui/empty";
 import { FilePlus2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { AddTransactionSheet } from "@/components/shared/dashboard/AddTransactionSheet";
+import { getCategories } from "@/lib/data/transactions";
 
 export const metadata = {
   title: "Transactions | Talli",
@@ -32,10 +32,12 @@ export default async function Page({
   searchParams: Promise<{ page?: string }>;
 }) {
   const params = await searchParams;
-
   const page = Math.max(Number(params.page) || 1, 1);
 
-  const { transactions, totalPages } = await getTransactions(page);
+  const [{ transactions, totalPages }, categories] = await Promise.all([
+    getTransactions(page),
+    getCategories(),
+  ]);
 
   if (transactions.length === 0) {
     return (
@@ -65,12 +67,7 @@ export default async function Page({
               </EmptyHeader>
 
               <EmptyContent>
-                <Button
-                  nativeButton={false}
-                  render={<Link href="/dashboard/transactions/new" />}
-                >
-                  Create transaction
-                </Button>
+                <AddTransactionSheet categories={categories} />
               </EmptyContent>
             </Empty>
           </div>
@@ -82,14 +79,19 @@ export default async function Page({
   return (
     <div className="p-6 h-full">
       <div>
-        <div className="mb-4">
-          <h1 className="text-2xl font-semibold tracking-tight">
-            Transactions
-          </h1>
+        <div className="mb-4 flex w-full justify-between">
+          <div>
+            <h1 className="text-2xl font-semibold tracking-tight">
+              Transactions
+            </h1>
 
-          <p className="text-sm text-muted-foreground">
-            Track your income and expenses.
-          </p>
+            <p className="text-sm text-muted-foreground">
+              Track your income and expenses.
+            </p>
+          </div>
+          <div>
+            <AddTransactionSheet categories={categories} />
+          </div>
         </div>
         <div className="rounded-lg border">
           <Table>
@@ -101,9 +103,7 @@ export default async function Page({
                 <TableHead className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
                   Category
                 </TableHead>
-                <TableHead
-                  className="text-xs font-medium uppercase tracking-wide text-muted-foreground text-right"
-                >
+                <TableHead className="text-xs font-medium uppercase tracking-wide text-muted-foreground text-right">
                   Amount
                 </TableHead>
               </TableRow>

@@ -159,3 +159,131 @@ export async function getTransactions(page = 1) {
     totalPages: Math.ceil((count ?? 0) / PAGE_SIZE),
   };
 }
+
+import type { Tables, TablesInsert } from "@/types/database";
+
+export type Transaction = Tables<"transactions">;
+export type TransactionInsert = TablesInsert<"transactions">;
+
+export async function getCategories() {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    throw new Error("Unauthorized");
+  }
+
+  const { data, error } = await supabase
+    .from("categories")
+    .select("id, name, icon, type")
+    .order("name");
+
+  if (error) {
+    throw error;
+  }
+
+  return data ?? [];
+}
+
+export async function createTransaction(
+  transaction: Omit<TransactionInsert, "user_id">,
+) {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    throw new Error("Unauthorized");
+  }
+
+  const { data, error } = await supabase
+    .from("transactions")
+    .insert({
+      ...transaction,
+      user_id: user.id,
+    })
+    .select()
+    .single();
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+}
+
+import type { TablesUpdate } from "@/types/database";
+
+export type TransactionUpdate = TablesUpdate<"transactions">;
+
+export async function getTransaction(id: string) {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    throw new Error("Unauthorized");
+  }
+
+  const { data, error } = await supabase
+    .from("transactions")
+    .select(
+      `
+      id,
+      amount,
+      type,
+      category_id,
+      description,
+      transaction_date,
+      categories (
+        name,
+        icon
+      )
+    `,
+    )
+    .eq("id", id)
+    .eq("user_id", user.id)
+    .single();
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+}
+
+export async function updateTransaction(
+  id: string,
+  updates: Omit<TransactionUpdate, "user_id">,
+) {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    throw new Error("Unauthorized");
+  }
+
+  const { data, error } = await supabase
+    .from("transactions")
+    .update(updates)
+    .eq("id", id)
+    .eq("user_id", user.id)
+    .select()
+    .single();
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+}
